@@ -1,0 +1,13 @@
+
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* background-color: rgb(252, 252, 252); */
+}
+
+.form-container > div {
+    margin: 20px;
+    width: 30%;
+}

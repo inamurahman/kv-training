@@ -1,0 +1,14 @@
+.header-bar {
+    margin-top: 0;
+    background-color: white;
+    height: 80px;
+}
+
+#logo {
+    width: 300px;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* padding-right: 0; */
+    /* height: 80px; */
+}
