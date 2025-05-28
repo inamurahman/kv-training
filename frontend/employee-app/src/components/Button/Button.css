@@ -27,3 +27,12 @@
     margin: 10px;
     width: 200px;
 }
+
+.button-endadornment {
+    background-color: #ffffff00;
+    color: 8a8b8f;
+    border: none;
+    position: absolute;
+    right: 0;
+    padding: 15px;
+}

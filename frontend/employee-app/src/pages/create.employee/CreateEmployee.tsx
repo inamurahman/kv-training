@@ -13,15 +13,19 @@ export const CreateEmployeePage = () => {
 
 export const CreateEmployeeForm = () => {
     const deparments = [{key:1, value:'HR'}, {key: 2, value:'BACKEND'}];
+    const roles = [{key:1, value:'Assistant'}, {key: 2, value:'Senior'}];
+    const status = [{key:1, value:'ACTIVE'}, {key: 2, value:'INACTIVE'}];
+
     return (
         <>
             <div className="form-container">
-                <Input label="Employee Name" name="employeeName" type="text" variant="input" placeholder="Employee name"/>
+                <Input label="Employee Name" name="employeeName" type="text" variant="input" placeholder="Employee name" />
                 <Input label="Joining Date" name="joiningDate" type="text" variant="input" placeholder="Joining Date"/>
 
                 <SelectComponent label="Department" name="department" options={deparments} />
-                <SelectComponent label="Role" name="role" options={deparments} />
-                <SelectComponent label="Status" name="status" options={deparments} />
+                <SelectComponent label="Role" name="role" options={roles} />
+                <SelectComponent label="Status" name="status" options={status} />
+
                 <Input label="Experience" name="experience" type="text" variant="input" placeholder="Experience"/>
 
                 <div className="form-element">

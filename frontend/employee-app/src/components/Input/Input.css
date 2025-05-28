@@ -11,6 +11,7 @@
     padding : 15px;
     outline: none;
     border-radius: 5px;
+    margin-top: 0px;
     border: 1px solid lightgray;
     background-color: white;    
 }
@@ -18,12 +19,14 @@
 .login-label {
     position: absolute;
     left:16px;
-    top: 26px;
+    top: 16px;
     background-color: white;
     color: black;
     font-weight: 400;
     padding: 5px;
     padding-top: 0;
+    pointer-events: none;
+    z-index: 2;
 }
 
 .form-label {
@@ -37,7 +40,7 @@
 {
     display: block;
     position: absolute;
-    top: 0;
+    top: -10px;
     left:20px;
     background-color: white;
     padding: 5px;
@@ -56,4 +59,9 @@
 .login-input:focus {
     border: 0;
     border:1px solid #03AEEE;
+}
+
+.input-area-group {
+    display: flex;
+    flex-direction: row;
 }
