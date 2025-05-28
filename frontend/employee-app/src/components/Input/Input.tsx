@@ -17,7 +17,7 @@ interface Props {
 export const Input = (props: Props) => {
     return (
         <div className='input-element'>
-            <div style={{display: "flex"}}>
+            <div className={`${props.variant}div`}>
                 <label className={`label ${props.variant}-label`}>{props.label}</label>
                 <input className={`input ${props.variant}-input`} name={props.name} type={props.type} value={props.value} placeholder={props.placeholder} onChange={props.onchange} ref={props.inputRef} required/>
                 {

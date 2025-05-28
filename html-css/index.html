@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Create Employee Page </title>
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+    <body>
+        <header>
+            <div class="header-bar">
+                <image id="logo" src="./Files/Files/kv-logo.png"></image>
+            </div>
+        </header>
+        <aside class="sidebar">
+            <nav>
+                <a class = "nav-button">
+                    <div class="button-image">
+                        <image src="Files/Files/icon.svg" style=" width: 90%; height: 90%"></image>
+                    </div>
+                    <div style="font-weight: bold; color: white; margin: 10px">Employee List</div>   
+                </a>
+            </nav>  
+            
+        </aside>
+        <section>
+            <div class="container">
+                <div><h2>Create Employee</h2></div>
+                <div>
+                    <div class="form-container">
+                        <div class="form-element">
+                            <label>Employee Name</label> 
+                            <input type="text"  placeholder="Employee Name">
+                        </div>
+                        <div class="form-element">
+                            <label>Employee ID</label>
+                            <input type="text"  placeholder="Employee ID">
+                        </div>
+                        <div class="form-element">
+                            <label>Joining Date</label>
+                            <input type="text"  placeholder="Joining Date">
+                        </div>
+                        <div class="form-element">
+                            <label>Department</label>
+                            <select name="role">
+                                <option>a</option>
+                                <option>b</option>
+                            </select>
+                        </div>
+                        <div class="form-element">
+                            <label>Role</label>
+                            <select name="role">
+                                <option>a</option>
+                                <option>b</option>
+                            </select>
+                        </div>
+                        <div class="form-element">
+                            <label>Status</label>
+                            <select name="role">
+                                <option>a</option>
+                                <option>b</option>
+                            </select>
+                        </div>
+                        <div class="form-element">
+                            <label>Experience</label>
+                            <input type="text"  placeholder="Experience">
+                        </div>
+                        <div class="form-element" style="display: flex; flex-direction: column;">
+                            <label>Address</label>
+                            <input type="text"  placeholder="Flat no">
+                            <input type="text"  placeholder="Line 1">
+                            <input type="text"  placeholder="Line 2">
+                        </div>
+                        
+                    </div>
+                    <div style="margin: 20px;">
+                        <input class="submit-button" type="button" value="Create">
+                        <input type="button" value="Cancel" style="color: white; width: 150px; border-color: rgb(182, 177, 177); color: black">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

@@ -6,6 +6,7 @@ import logo from '../../assets/kv-logo.png'
 import './LoginRightContainer.css'
 // import useMousePointer from "../../hooks/useMousePointerHook"
 import { useLocalStorageHook } from "../../hooks/useLocalStorageHook"
+import { useNavigate } from "react-router-dom"
 
 
 const EndAdornment = (props: { fn: VoidFunction}) => {
@@ -14,6 +15,7 @@ const EndAdornment = (props: { fn: VoidFunction}) => {
     )
 }
 
+
 export const LoginRightContainer = () => {
     const  [username , setUsername] = useState('');
     const  [password , setPassword] = useState('');
@@ -21,6 +23,16 @@ export const LoginRightContainer = () => {
 
     const  [showPassword , setShowPassword] = useLocalStorageHook("showPassword", "false");
 
+    const navigate = useNavigate()
+
+    const user = { username: "admin", password: "admin"}
+    const doLogin = () => {
+        if (user.username === username && user.password === password){
+            localStorage.setItem("isLoggedIn", "true")
+            navigate("/")
+        }
+        else localStorage.setItem("isLoggedIn", "false")
+    }
 
     const usernameRef = useRef<HTMLInputElement>(null);
 
@@ -79,7 +91,7 @@ export const LoginRightContainer = () => {
                         <p>y: {coordinates.y}</p>
                     </div> */}
                     <div className="login-form-element">
-                        <Button variant="blue" className="button-login" type="submit" text="Login"/>
+                        <Button variant="blue" className="button-login" type="submit" text="Login" onclick={doLogin} disabled={username.length===0 || password.length===0}/>
                     </div>
 
                 </div>

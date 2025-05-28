@@ -1,5 +1,5 @@
 .input {
-    margin-top: 10px;
+    margin-top: 20px;
     padding : 10px;
 }
 
@@ -64,4 +64,9 @@
 .input-area-group {
     display: flex;
     flex-direction: row;
+}
+
+.logindiv {
+    display: flex;
+    /* flex-direction: row; */
 }

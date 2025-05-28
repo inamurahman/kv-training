@@ -1,0 +1,121 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+body {
+    margin: 0;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.image-div {
+    margin: 20px;
+    width: 50%;
+    /* height: 100vh; */
+    background-color: rgb(224, 243, 245);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.login-div {
+    margin:20px;
+    width: 50%;
+    /* height: 100vh; */
+    /* background-color: red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle {
+    background-color: white;
+    border-radius: 300px;
+    width: 70%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 300px;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* padding-right: 0; */
+    /* height: 80px; */
+}
+
+.material:focus {
+    border:1px solid #03AEEE;
+}
+
+input:focus {
+    border: 0;
+}
+
+input {
+    margin-top: 10px;
+    padding : 15px; 
+    width: 100% ;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    background-color: white;    
+}
+
+.form-container {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+}
+
+.form-element {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    position: relative;
+}
+
+.material:focus + label,
+.material:not(:placeholder-shown) + label
+{
+    display: block;
+    position: absolute;
+    top: 0;
+    left:20px;
+    background-color: white;
+    padding: 5px;
+    padding-top: 0;
+    color: #03AEEE;
+}
+
+
+
+.form-element label {
+    position: absolute;
+    left:16px;
+    top: 26px;
+    background-color: white;
+    color: black;
+    font-weight: 400;
+    padding: 5px;
+    padding-top: 0;
+}
+
+.submit-button {
+    background-color: #03AEEE;
+    color: white
+}
+.circle-logo {
+    width: 70%;
+    /* height: 70%; */
+}
