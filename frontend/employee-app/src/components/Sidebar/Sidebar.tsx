@@ -18,7 +18,7 @@ export const Sidebar = () => {
     return (
         <aside className="sidebar">
             <nav className="nav">
-                <a className = "nav-button">
+                <a className = "nav-button" onClick={()=>navigate('/employees')}>
                     <div className="button-image">
                         <img src={employeeIcon} />
                     </div>

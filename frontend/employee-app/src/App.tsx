@@ -7,6 +7,8 @@ import NotFound from './pages/notfound/Notfound';
 import { HomeLayout } from './containers/home.layout/HomeLayout';
 import { EmployeeListContainer } from './pages/employee.list/EmployeeListContainer';
 import { EmployeeDetails } from './pages/employee.details/EmployeeDetails';
+import { EmployeeForm } from './containers/employee.form/EmployeeForm';
+import { EditEmployee } from './pages/edit.employee/EditEmployee';
 
 const isLoggedIn = () => {
   const token = localStorage.getItem("isLoggedIn")
@@ -41,9 +43,11 @@ const router = createBrowserRouter ([
     element: <HomeLayout/>,
     children: [
       { index: true, element: <EmployeeListContainer />},
-      { path: "create", element: <CreateEmployee />},
-      { path: "details/:id", element: <EmployeeDetails/>}
-    ]
+      { path: "create", element: <CreateEmployee/>},
+      { path: "details/:id", element: <EmployeeDetails/>},
+      { path: "edit/:id", element: <EditEmployee/>}
+    ],
+    errorElement:<NotFound />
 
   },
   {

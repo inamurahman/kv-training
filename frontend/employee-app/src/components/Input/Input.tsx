@@ -11,7 +11,8 @@ interface Props {
     value?: string;
     onchange?: (event:ChangeEvent<HTMLInputElement>) => void;
     inputRef?: React.Ref<HTMLInputElement>;
-    endAdornment?:React.ReactNode
+    endAdornment?:React.ReactNode;
+    disabled?: boolean
 }
 
 export const Input = (props: Props) => {
@@ -19,7 +20,7 @@ export const Input = (props: Props) => {
         <div className='input-element'>
             <div className={`${props.variant}div`}>
                 <label className={`label ${props.variant}-label`}>{props.label}</label>
-                <input className={`input ${props.variant}-input`} name={props.name} type={props.type} value={props.value} placeholder={props.placeholder} onChange={props.onchange} ref={props.inputRef} required/>
+                <input className={`input ${props.variant}-input`} name={props.name} type={props.type} value={props.value} placeholder={props.placeholder} onChange={props.onchange} ref={props.inputRef} disabled={props.disabled} required/>
                 {
                     props.endAdornment ? props.endAdornment : null  
                 }

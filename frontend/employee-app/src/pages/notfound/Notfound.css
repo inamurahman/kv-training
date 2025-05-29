@@ -1,0 +1,13 @@
+.not-found-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 200px;
+}
+.not-found-content {
+    padding: 30px;
+    height: 200px;
+    /* width: 200px; */;
+}
