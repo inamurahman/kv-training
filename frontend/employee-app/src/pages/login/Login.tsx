@@ -3,7 +3,7 @@ import { LoginRightContainer } from "../../containers/login.right.container/Logi
 import { UncontrolledLogin } from "../../containers/login.right.container/UncontrolledLogin"
 import "./Login.css"
 
-export const Login= () => {
+const Login= () => {
 
     return (
         <div className="container">
@@ -13,3 +13,5 @@ export const Login= () => {
         </div>
     )
 }
+
+export default Login

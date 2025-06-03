@@ -3,9 +3,13 @@ import deleteIcon from '../../assets/delete.png'
 import editIcon from '../../assets/pencil.png'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Button, Modal } from '../../components'
-import { useEffect, useMemo, useState, type MouseEvent } from 'react'
+import { useEffect, useMemo, useState, type JSXElementConstructor, type MouseEvent, type ReactElement, type ReactNode, type ReactPortal } from 'react'
 import { FormHeaderButton } from '../../components/Button/FormHeaderButton'
 import { StatusSpan } from '../../components/StatusSpan/StatusSpan'
+import { useDispatch, useSelector, useStore } from 'react-redux'
+import { EMPLOYEE_ACTION_TYPES, type Employee } from '../../store/employee/employee.types'
+import store from '../../store/store'
+import { useDeleteEmployeeMutation, useGetEmployeeListQuery } from '../../api-service/employees/employees.api'
 
 const employees = [
     {
@@ -14,7 +18,7 @@ const employees = [
         email: "johndoe@example.com",
         employeeId: "1x2y3z4a5b6c",
         role: "Developer",
-        joiningDate: "01/15/2015",
+        dateOfJoining: "01/15/2015",
         status: "Active",
         experience: 5,
         department: 3,
@@ -31,7 +35,7 @@ const employees = [
         email: "janesmith@example.com",
         employeeId: "2y3z4a5b6c7d",
         role: "Manager",
-        joiningDate: "03/10/2012",
+        dateOfJoining: "03/10/2012",
         status: "Inactive",
         experience: 8,
         department: 1,
@@ -48,7 +52,7 @@ const employees = [
         email: "alicebrown@example.com",
         employeeId: "3z4a5b6c7d8e",
         role: "Designer",
-        joiningDate: "07/22/2018",
+        dateOfJoining: "07/22/2018",
         status: "Active",
         experience: 2,
         department: 4,
@@ -65,7 +69,7 @@ const employees = [
         email: "bobgreen@example.com",
         employeeId: "4a5b6c7d8e9f",
         role: "Tester",
-        joiningDate: "11/05/2017",
+        dateOfJoining: "11/05/2017",
         status: "Active",
         experience: 3,
         department: 2,
@@ -82,7 +86,7 @@ const employees = [
         email: "charliewhite@example.com",
         employeeId: "5b6c7d8e9f0g",
         role: "Sales",
-        joiningDate: "05/18/2019",
+        dateOfJoining: "05/18/2019",
         status: "Inactive",
         experience: 1,
         department: 5,
@@ -99,7 +103,7 @@ const employees = [
         email: "eveblack@example.com",
         employeeId: "6c7d8e9f0g1h",
         role: "HR",
-        joiningDate: "02/02/2016",
+        dateOfJoining: "02/02/2016",
         status: "Active",
         experience: 7,
         department: 2,
@@ -116,7 +120,7 @@ const employees = [
         email: "eveblack@example.com",
         employeeId: "6c7d8e9f0g1h",
         role: "HR",
-        joiningDate: "02/02/2016",
+        dateOfJoining: "02/02/2016",
         status: "Probation",
         experience: 7,
         department: 2,
@@ -131,21 +135,18 @@ const employees = [
     
 
 export const EmployeeListContainer = () => {
+    const dispatch = useDispatch();
 
     const [searchParams, setSearchParams] = useSearchParams();
+    const [deleteEmployee] = useDeleteEmployeeMutation()
 
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [deleteId, setDeleteId] = useState(-1);
 
-    // const handleGetSearchParams = () => {
-    //     const status = searchParams.get("status") || "All"
-    //     console.log("searchParams",status)
-    // }
     const status = searchParams.get("status") || "all"
-    // console.log("searchParams",status)
 
     const statusOptions = ["All", "Active", "Inactive", "Probation"]
-
 
     const navigate = useNavigate();
 
@@ -161,9 +162,17 @@ export const EmployeeListContainer = () => {
     }
 
 
+    // const employees = useSelector((state:any) => state.employees)
+    // console.log(employees)
+
+    // const employees = store.getState().employee.employees
+    // console.log(employees)
+
+    const getEmployees = useGetEmployeeListQuery();
+    const employees = getEmployees.data  
+
     const handleStatusFilterChange = (status: string) => {
         const newSearchParams = new URLSearchParams(searchParams)
-
         if (status === "all" ) {
             newSearchParams.delete("status")
         } else {
@@ -174,39 +183,44 @@ export const EmployeeListContainer = () => {
 
     const filteredEmployees = useMemo(
         () => {
-
-            if(status === "all") return employees
-            else return employees.filter((employee) => 
-                employee.status.toLowerCase() === status.toLowerCase()
+            if(status.toLowerCase() === "all" || (status.toLowerCase() in statusOptions)) return employees
+            else return employees?.filter((employee: { status: string }) => {
+                return employee.status.toLowerCase() === status.toLowerCase()
+            }
             )
-        }, [status]
+        }, [status, employees]
     )
 
+    const HandleDeleteEmployee = async() => {
+        deleteEmployee({id: deleteId})
+        .unwrap()
+        .then((response) => {
+            console.log("response")
+            console.log(response)
+            alert(response.message)
+        }).catch((error) => {
+            console.log("error")
+            console.log(error)
+            alert(error)
+        })
+        console.log("handle delete employee")
+        // await deleteEmployee({id: deleteId})
+        setModalIsOpen(false)
+    }
 
-    // useEffect(() => {
-    //     if(status === "All") filteredEmployees = employees
-
-    //     else filteredEmployees=employees.filter((employee) => {
-    //         employee.status.toLowerCase() === status.toLowerCase()
-    //         console.log(employee.status.toLowerCase(), status.toLowerCase());
-    //     })
-    // }, [searchParams])
+      
 
 
 
     return (
         <>
-            {/* <div>
-                <Button text='GetParams' variant='grey' type='button'onclick={handleGetSearchParams}/>
-                <Button text='SetParams' variant='grey' type='button' onclick={handleStatusFilterChange} />
-            </div> */}
             <div className='employee-list-title layout-child-div'>
                 <h2>Employee List</h2>
                 <div className='employee-list-title-input-group'>
                     <div className='employee-list-title-filter-group'>
                         <label>Filter By</label>
-                        <select name='status' onChange={(event) => handleStatusFilterChange(event.target.value)}>
-                            <option value="" disabled selected hidden> Status </option>
+                        <select name='status' defaultValue='' onChange={(event) => handleStatusFilterChange(event.target.value)}>
+                            <option value="" disabled hidden> Status </option>
                             {
                                 statusOptions.map((status) => {
                                     return <option value={status.toLowerCase()}>{status}</option>
@@ -226,33 +240,23 @@ export const EmployeeListContainer = () => {
                 <h3>Experience</h3>
                 <h3>Action</h3>
             </div>
-            {/* <div className='employee-list-element'>
-                <p>Employee Name</p>
-                <p>Employee Id</p>
-                <p>Joining Date</p>
-                <p>Role</p>
-                <p><span className='span probation'>Status</span></p>
-                <p>Experience</p>
-                <div className='action-buttons'>
-                    <img src={deleteIcon}/>
-                    <img src={editIcon}/>
-                </div>
-            </div> */}
 
             {
-                filteredEmployees.map((employee)=> {
-                    return <div className='employee-list-element layout-child-div' onClick={()=>navigate(`/employees/details/${employee.id}`)}>
-                        <p>{employee.name}</p>
-                        <p>{employee.id}</p>
-                        <p>{employee.joiningDate}</p>
-                        <p>{employee.role}</p>
-                        <p><StatusSpan status={employee.status}/></p>
-                        <p>{employee.experience}</p>
-                        <div className='action-buttons'>
-                            <img src={deleteIcon} onClick={(event) => { handleDeleteClick(event) }} />
-                            <img src={editIcon} onClick={(event) => { navigate(`/employees/edit/${employee.id}`); event.stopPropagation()}} />
+                filteredEmployees?.map((employee: Employee)=> {
+                    return (
+                        <div className='employee-list-element layout-child-div' onClick={()=>navigate(`/employees/details/${employee.id}`)}>
+                            <p>{employee.name}</p>
+                            <p>{employee.employeeId}</p>
+                            <p>{new Date (employee.dateOfJoining ).toLocaleDateString()}</p>
+                            <p>{employee.role}</p>
+                            <p><StatusSpan status={employee.status.charAt(0) + employee.status.substring(1).toLowerCase()}/></p>
+                            <p>{employee.experience}</p>
+                            <div className='action-buttons'>
+                                <img src={deleteIcon} onClick={(event) => { handleDeleteClick(event); if (employee.id) setDeleteId(employee.id) }} />
+                                <img src={editIcon} onClick={(event) => { navigate(`/employees/edit/${employee.id}`); event.stopPropagation()}} />
+                            </div>
                         </div>
-                    </div>
+                    ) 
                 })
             }
 
@@ -264,7 +268,7 @@ export const EmployeeListContainer = () => {
                         <p>Do you really want to delete employee</p>
                     </div>
                     <div className='delete-confirmation-box-buttons '>
-                        <Button variant='blue' text='Confirm' type='submit' />
+                        <Button variant='blue' text='Confirm' type='submit' onclick={HandleDeleteEmployee}/>
                         <Button variant='grey' text='Cancel'  type='submit' onclick={handleOnClose}/>
                     </div>
                 </div>

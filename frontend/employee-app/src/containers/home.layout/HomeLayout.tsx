@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header/Header"
 import { Sidebar } from "../../components/Sidebar/Sidebar"
 import "./HomeLayout.css"
@@ -11,13 +11,14 @@ interface Props {
 export const HomeLayout = () => {
 
     const isLoggedIn = () => {
-        const token = localStorage.getItem("isLoggedIn")
-        return token === "true";
+        const token = localStorage.getItem("token")
+        if (token) return true;
+        else return false;
     }
 
     const navigate=useNavigate();
 
-    if (!isLoggedIn()) navigate('/login') 
+    if (!isLoggedIn()) return <Navigate to="/login" />
 
     return (
         <>

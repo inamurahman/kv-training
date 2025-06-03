@@ -1,10 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { EmployeeForm } from "../../containers/employee.form/EmployeeForm";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
+import { useStore } from "react-redux";
+import { useCreateEmployeeMutation } from "../../api-service/employees/employees.api";
 
 
 
 export const CreateEmployee = () => {
+    const navigate = useNavigate();
+    const [createEmployee] = useCreateEmployeeMutation();
     const [formValues, setFormValues] = useState(
         {
             name: "",
@@ -12,43 +16,76 @@ export const CreateEmployee = () => {
             age: 0,
             employeeId: '',
             role: '',
-            joiningDate: '',
+            password: '',
+            dateOfJoining: null,
             status: '',
-            experience: '',
-            department: 0,
+            experience: 0,
+            departmentId: 0,
             address: {
                 houseNo: "",
                 line1: "",
                 line2: "",
-                pincode: ""
+                pincode: 0
             }
-        }
+        } 
     )
 
-    const handleFormChange = (event: { target: { name: any; value: any; }; }) => {
-        const {name, value} = event.target;
-        setFormValues(prev => ({
-            ...prev,
-            [name]: value
+    // const handleFormChange = (event: { target: { name: any; value: any; }; }) => {
+    //     const {name, value} = event.target;
+    //     if (name in formValues.address){
+    //         setFormValues(prev => ({
+    //             ...prev,
+    //             address : {
+    //                 ...prev.address,
+    //                 [name]: value
+    //             }
+    //         }))
+    //     } else{
+    //         setFormValues(prev => ({
+    //             ...prev,
+    //             [name]: value
 
-        }))
-    }
-    
-    const handleAddressChange = (event: { target: { name: any; value: any; }; }) => {
-        const {name, value} = event.target
-        setFormValues(prev => ({
-            ...prev,
-            address : {
-                ...prev.address,
+    //         }))
+    //     }
+        
+    // }
+
+    const handleFormChange = (name:string, value: string | number) => {
+        if (name in formValues.address){
+            setFormValues(prev => ({
+                ...prev,
+                address : {
+                    ...prev.address,
+                    [name]: value
+                }
+            }))
+        } else{
+            setFormValues(prev => ({
+                ...prev,
                 [name]: value
-            }
-        }))
+
+            }))
+        }
+        
+    }
+
+    const store = useStore();
+    const handleFormSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        // // dispatch({type: 'employee/ADD', payload: formValues})
+        // const action = addEmployee(formValues)
+        // dispatch(action)
+        // console.log(store.getState(), "store>?")
+        console.log(formValues)
+        createEmployee(formValues);
+        
+        navigate(-1)
     }
 
 
     return (
         <>
-            <EmployeeForm type="Create" values={formValues} formOnChange={handleFormChange} addressOnChange={handleAddressChange}/>
+            <EmployeeForm type="Create" values={formValues} formOnChange={handleFormChange} onsubmit={handleFormSubmit}/>
         </>
     )
 }

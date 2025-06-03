@@ -7,8 +7,8 @@ interface Props {
     value? : string;
     onchange? : (event:ChangeEvent<HTMLSelectElement>) => void;
     options: {
-        key: number;
-        value: string;
+        value: number | string;
+        name: string
     }[];
 }
 
@@ -16,9 +16,10 @@ export const SelectComponent = (props: Props) => {
     return (
         <div className="form-element">
             <label>{props.label}</label>
-            <select name={props.name} value={props.value} onChange={props.onchange}>
+            <select name={props.name} onChange={props.onchange} value={props.value} defaultValue='' required>
+                <option value="" disabled>{props.label}</option>
                 {props.options.map((option) => (
-                    <option key={option.key} value={option.key}>{option.value}</option>
+                    <option value={option.value}>{option.name}</option>
                 ))}
             </select>
         </div>

@@ -7,11 +7,12 @@ import { useNavigate } from "react-router-dom"
 
 export const Sidebar = () => {
     const [isLoggedIn, setIsLoggedIn] = useLocalStorageHook("isLoggedIn", "false")
-
+    
     const navigate = useNavigate()
     
     const logout = () => {
-        setIsLoggedIn("false")
+        // setIsLoggedIn("false")
+        localStorage.setItem("token", '')
         navigate('/login')
     }
 

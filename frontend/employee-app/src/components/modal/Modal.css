@@ -14,7 +14,8 @@
 .modal-content {
     position: relative;
     background-color: white;
-    min-width: 200px;
+    border-radius: 10px;
+    min-width: 300px;
 }
 
 .modal-close-button {

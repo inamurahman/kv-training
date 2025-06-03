@@ -2,17 +2,21 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import './App.css'
 import { CreateEmployee, } from './pages/create.employee/CreateEmployee'
-import { Login } from './pages/login/Login'
+// import Login from './pages/login/Login'
 import NotFound from './pages/notfound/Notfound';
 import { HomeLayout } from './containers/home.layout/HomeLayout';
 import { EmployeeListContainer } from './pages/employee.list/EmployeeListContainer';
 import { EmployeeDetails } from './pages/employee.details/EmployeeDetails';
-import { EmployeeForm } from './containers/employee.form/EmployeeForm';
 import { EditEmployee } from './pages/edit.employee/EditEmployee';
+import { lazy, Suspense } from 'react';
+
+const LazyLoginComponent = lazy(() => import ('./pages/login/Login'));
 
 const isLoggedIn = () => {
-  const token = localStorage.getItem("isLoggedIn")
-  return token === "true";
+  const token = localStorage.getItem("token")
+  console.log("token in isLoggedIn", token)
+  if (token) return true
+  return false
 }
 
 // const ProtectedRouteChecker =  ({children}: {children: React.ReactNode}) => {
@@ -36,8 +40,13 @@ const router = createBrowserRouter ([
   },
   {
     path: "/login",
-    element: <PublicRouteChecker> <Login /> </PublicRouteChecker> ,
-  },
+    element:
+    <PublicRouteChecker>
+      <Suspense fallback={<p>Loading</p>}>
+         <LazyLoginComponent />
+      </Suspense>
+    </PublicRouteChecker>
+  },    
   {
     path: "/employees",
     element: <HomeLayout/>,
@@ -61,8 +70,6 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-      {/* <Login /> */}
-      {/* <CreateEmployeePage/>  */}
     </>
   )
 }
