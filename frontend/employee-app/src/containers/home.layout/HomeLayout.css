@@ -8,6 +8,13 @@
     margin-left: 300px  ;
 }
 
+@media screen and (max-width: 800px) {
+    .layout-container {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
 .layout-child-div {
     margin: 10px;
     margin-bottom: 10px;

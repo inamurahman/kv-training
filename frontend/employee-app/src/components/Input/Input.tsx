@@ -4,6 +4,7 @@ import type React from "react";
 
 interface Props {
   label: string;
+  id?: string;
   name: string;
   type: string;
   variant: string;
@@ -19,9 +20,10 @@ export const Input = (props: Props) => {
   return (
     <div className="input-element">
       <div className={`${props.variant}div`}>
-        <label className={`label ${props.variant}-label`}>{props.label}</label>
+        <label className={`label ${props.variant}-label`} htmlFor={props.id}>{props.label}</label>
         <input
           className={`input ${props.variant}-input`}
+          id={props.id}
           name={props.name}
           type={props.type}
           value={props.value}
@@ -35,4 +37,5 @@ export const Input = (props: Props) => {
       </div>
     </div>
   );
+  
 };

@@ -80,15 +80,15 @@ export const LoginRightContainer = () => {
     }
   }, []);
 
-//   useEffect(() => {
-//     if (!username.includes("@")) {
-//       setMessage("⚠️ Username must be a valid e-mail id");
-//     }
+  useEffect(() => {
+    if (username.length > 20) {
+      setMessage("Username must be less than 20 characters");
+    }
 
-//     return () => {
-//       setMessage("");
-//     };
-//   }, [username]);
+    return () => {
+      setMessage("");
+    };
+  }, [username]);
 
   return (
     <div className="login-div">
@@ -99,6 +99,7 @@ export const LoginRightContainer = () => {
         <div className="login-form-element">
           <Input
             variant="login"
+            id="Username"
             name="Username"
             type="text"
             label="Username"
@@ -137,6 +138,7 @@ export const LoginRightContainer = () => {
 
           <Input
             variant="login"
+            id="Password"
             name="Password"
             type={JSON.parse(showPassword) ? "text" : "Password"}
             label="Password"
@@ -171,7 +173,7 @@ export const LoginRightContainer = () => {
             <Button
               variant="blue"
               className="button-login"
-              type="button"
+              type="submit"
               text="Login"
               onclick={onLogin}
               disabled={username.length === 0 || password.length === 0 || isLoading}
