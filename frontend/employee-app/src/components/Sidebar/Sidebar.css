@@ -2,12 +2,38 @@
     width:280px;
     height: 50px;
     padding: 10px;
-    background-color: #03AEEE;
     display: flex;
+    /* outline: #03AEEE; */
+    border: 2px solid #03AEEE;
+    border-right: none;
     align-items: center;
     border-bottom-left-radius: 30px;
     border-top-left-radius: 30px;
+    letter-spacing: 2px;
 }
+
+.nav-button > div {
+    color: #03AEEE;
+}
+
+.selected-nav {
+    background-color: #03AEEE;
+}
+
+.selected-nav > div {
+    color: white;
+}
+
+.logout-nav {
+    border: none;
+    background-color: rgb(177, 176, 176);
+
+}
+.logout-nav > div{
+    color: white;
+    border: none;
+}
+
 
 .sidebar {
     background-color: white ;
@@ -35,6 +61,7 @@
     justify-content: center; 
     align-items: center; 
     padding: 5px;
+    border: 2px solid #03AEEE;
 }
 
 .sidebar-label {

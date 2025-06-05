@@ -9,6 +9,8 @@ import { EmployeeListContainer } from './pages/employee.list/EmployeeListContain
 import { EmployeeDetails } from './pages/employee.details/EmployeeDetails';
 import { EditEmployee } from './pages/edit.employee/EditEmployee';
 import { lazy, Suspense } from 'react';
+import EmployeeProfile from './pages/profile.employee/EmployeeProfile';
+import Loader from './components/Loader/Loader';
 
 const LazyLoginComponent = lazy(() => import ('./pages/login/Login'));
 
@@ -19,17 +21,19 @@ const isLoggedIn = () => {
   return false
 }
 
-// const ProtectedRouteChecker =  ({children}: {children: React.ReactNode}) => {
-//   const loggedIn = isLoggedIn();
+const ProtectedRouteRoleChecker =  ({children}: {children: React.ReactNode}) => {
+  const payloadString = localStorage.getItem("access-payload")
+  if(!payloadString) return null
+  const payload = JSON.parse(payloadString)
   
-//   if(loggedIn) return children;
-//   return <Navigate to="/login"/>
-// }
+  if(payload.role === "ADMIN" || payload.role === "HR") return children;
+  return <Navigate to="/login"/>
+}
 
 const PublicRouteChecker =  ({children}: {children: React.ReactNode}) => {
   const loggedIn = isLoggedIn();
   
-  if(loggedIn) return <Navigate to="/"/>;
+  if(loggedIn) return <NotFound/>;
   return children
 }
 
@@ -42,19 +46,20 @@ const router = createBrowserRouter ([
     path: "/login",
     element:
     <PublicRouteChecker>
-      <Suspense fallback={<p>Loading</p>}>
+      <Suspense fallback= {<Loader/>} >
          <LazyLoginComponent />
       </Suspense>
     </PublicRouteChecker>
   },    
-  {
+  { 
     path: "/employees",
     element: <HomeLayout/>,
     children: [
       { index: true, element: <EmployeeListContainer />},
-      { path: "create", element: <CreateEmployee/>},
+      { path: "create", element: <ProtectedRouteRoleChecker><CreateEmployee/></ProtectedRouteRoleChecker>},
       { path: "details/:id", element: <EmployeeDetails/>},
-      { path: "edit/:id", element: <EditEmployee/>}
+      { path: "edit/:id", element: <ProtectedRouteRoleChecker><EditEmployee/></ProtectedRouteRoleChecker>},
+      { path: "profile", element: <EmployeeProfile/>}
     ],
     errorElement:<NotFound />
 

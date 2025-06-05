@@ -8,6 +8,7 @@ import { FormHeaderButton } from '../../components/Button/FormHeaderButton'
 import { StatusSpan } from '../../components/StatusSpan/StatusSpan'
 import { EMPLOYEE_ACTION_TYPES, type Employee } from '../../store/employee/employee.types'
 import { useDeleteEmployeeMutation, useGetEmployeeListQuery } from '../../api-service/employees/employees.api'
+import { isUserWithAccess } from '../../utilities/checkAccess'
 
 
 export const EmployeeListContainer = () => {
@@ -36,6 +37,8 @@ export const EmployeeListContainer = () => {
 
     }
 
+
+    const isPrivilegedUser = isUserWithAccess();
 
     // const employees = useSelector((state:any) => state.employees)
     // console.log(employees)
@@ -84,6 +87,7 @@ export const EmployeeListContainer = () => {
         setModalIsOpen(false)
     }
 
+
       
 
 
@@ -104,7 +108,10 @@ export const EmployeeListContainer = () => {
                             }
                         </select>
                     </div>
-                    <FormHeaderButton type="Create" onclick={() => navigate('/employees/create')}/>
+                    {
+                        isPrivilegedUser &&
+                        <FormHeaderButton type="Create" onclick={() => navigate('/employees/create')}/>
+                    }
                 </div>
             </div>
             <div className='employee-list-header layout-child-div'>
@@ -114,7 +121,10 @@ export const EmployeeListContainer = () => {
                 <h3>Role</h3>
                 <h3>Status</h3>
                 <h3>Experience</h3>
-                <h3>Action</h3>
+                {
+                    isPrivilegedUser &&
+                    <h3>Action</h3>
+                }
             </div>
 
             {
@@ -127,10 +137,12 @@ export const EmployeeListContainer = () => {
                             <p>{employee.role}</p>
                             <p><StatusSpan status={employee.status.charAt(0) + employee.status.substring(1).toLowerCase()}/></p>
                             <p>{employee.experience}</p>
-                            <div className='action-buttons'>
-                                <img src={deleteIcon} onClick={(event) => { handleDeleteClick(event); if (employee.id) setDeleteId(employee.id) }} />
-                                <img src={editIcon} onClick={(event) => { navigate(`/employees/edit/${employee.id}`); event.stopPropagation()}} />
-                            </div>
+                            { isPrivilegedUser &&
+                                <div className='action-buttons'>
+                                    <img src={deleteIcon} onClick={(event) => { handleDeleteClick(event); if (employee.id) setDeleteId(employee.id) }} />
+                                    <img src={editIcon} onClick={(event) => { navigate(`/employees/edit/${employee.id}`); event.stopPropagation()}} />
+                                </div>
+                            }   
                         </div>
                     ) 
                 })

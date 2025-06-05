@@ -36,6 +36,7 @@ export const LoginRightContainer = () => {
     .unwrap()
     .then((response) => {
         localStorage.setItem("token", response.accessToken);
+        localStorage.setItem("access-payload", JSON.stringify(response.payload))
         navigate("/employees");
     }).catch((error) => {
         console.log(error)

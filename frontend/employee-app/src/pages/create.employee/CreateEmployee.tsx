@@ -81,7 +81,7 @@ export const CreateEmployee = () => {
         createEmployee(formValues)
         .unwrap()
         .then((response)=> {
-            console.log(response)
+            console.log("Employee Created Successfully")
             alert (response)
         }).catch((error) => {
             console.log(error)
