@@ -69,15 +69,24 @@ export const CreateEmployee = () => {
         
     }
 
-    const store = useStore();
-    const handleFormSubmit = (e: FormEvent) => {
+    // const store = useStore();
+    const handleFormSubmit = async (e: FormEvent) => {
         e.preventDefault();
         // // dispatch({type: 'employee/ADD', payload: formValues})
         // const action = addEmployee(formValues)
         // dispatch(action)
-        // console.log(store.getState(), "store>?")
+        // console.log(store.getState(), "store>?"
+        
         console.log(formValues)
-        createEmployee(formValues);
+        createEmployee(formValues)
+        .unwrap()
+        .then((response)=> {
+            console.log(response)
+            alert (response)
+        }).catch((error) => {
+            console.log(error)
+            alert(error)
+        })
         
         navigate(-1)
     }

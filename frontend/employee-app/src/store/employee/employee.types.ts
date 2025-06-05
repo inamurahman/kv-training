@@ -38,10 +38,10 @@ export interface Employee {
   age: number;
   address: Address;
   password: string;
-  role: Role;
-  dateOfJoining: Date;
+  role: string;
+  dateOfJoining: Date | null;
   experience: number;
-  status: Status;
+  status: Status | string;
   departmentId: number | string;
 }
 

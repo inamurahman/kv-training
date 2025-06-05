@@ -123,7 +123,7 @@ export const EmployeeListContainer = () => {
                         <div className='employee-list-element layout-child-div' onClick={()=>navigate(`/employees/details/${employee.id}`)}>
                             <p>{employee.name}</p>
                             <p>{employee.employeeId}</p>
-                            <p>{new Date (employee.dateOfJoining ).toLocaleDateString()}</p>
+                            <p>{new Date (employee.dateOfJoining? employee.dateOfJoining : "").toLocaleDateString()}</p>
                             <p>{employee.role}</p>
                             <p><StatusSpan status={employee.status.charAt(0) + employee.status.substring(1).toLowerCase()}/></p>
                             <p>{employee.experience}</p>
