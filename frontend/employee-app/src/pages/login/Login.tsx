@@ -4,7 +4,6 @@ import { UncontrolledLogin } from "../../containers/login.right.container/Uncont
 import "./Login.css"
 
 const Login= () => {
-
     return (
         <div className="container">
             <LoginLeftContainer/>

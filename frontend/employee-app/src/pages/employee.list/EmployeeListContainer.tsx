@@ -58,6 +58,7 @@ export const EmployeeListContainer = () => {
 
     const filteredEmployees = useMemo(
         () => {
+            // console.log(status)
             if(status.toLowerCase() === "all" || (status.toLowerCase() in statusOptions)) return employees
             else return employees?.filter((employee: { status: string }) => {
                 return employee.status.toLowerCase() === status.toLowerCase()
@@ -97,7 +98,7 @@ export const EmployeeListContainer = () => {
                         <select name='status' defaultValue='' onChange={(event) => handleStatusFilterChange(event.target.value)}>
                             <option value="" disabled hidden> Status </option>
                             {
-                                statusOptions.map((status) => {
+                                statusOptions.map((status) => { 
                                     return <option value={status.toLowerCase()}>{status}</option>
                                 })
                             }

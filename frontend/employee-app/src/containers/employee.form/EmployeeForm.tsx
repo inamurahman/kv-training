@@ -53,12 +53,12 @@ export const EmployeeForm = (props: Props) => {
             <form className="layout-child-div" onSubmit={props.onsubmit}>
                 <div className="form-container">
                     <Input label="Employee Name" name="name" type="text" variant="input" placeholder="Employee name" value={props.values.name} onchange={(event) => { props.formOnChange(event.target.name, event.target.value) }} />
-                    <Input label="Joining Date" name="dateOfJoining" type="date" variant="input" placeholder="Joining Date" value={props.values.dateOfJoining} onchange={(event) => { props.formOnChange(event.target.name, event.target.value) }} />
+                    <Input label="Joining Date" name="dateOfJoining" type="date" variant="input" placeholder="Joining Date" value={String(props.values.dateOfJoining)} onchange={(event) => { props.formOnChange(event.target.name, event.target.value) }} />
                     <Input label="Email" name="email" type="text" variant="input" placeholder="Email" value={props.values.email} onchange={(event) => { props.formOnChange(event.target.name, event.target.value) }} />
                     <Input label="Age" name="age" type="number" variant="input" placeholder="Age" value={String(props.values.age)} onchange={(event) => { props.formOnChange(event.target.name, Number(event.target.value)) }} />
 
 
-                    <SelectComponent label="Department" name="departmentId" options={departments} value={String(props.values.departmentId)} onchange={(event) => { props.formOnChange(event.target.name, Number(event.target.value)) }} />
+                    <SelectComponent label="Department" name="departmentId" options={departments} value={props.values.departmentId} defaultValue={0} onchange={(event) => { props.formOnChange(event.target.name, Number(event.target.value)) }} />
                     <SelectComponent label="Role" name="role" options={roles} value={props.values.role} onchange={(event) => { props.formOnChange(event.target.name, event.target.value) }} />
                     <SelectComponent label="Status" name="status" options={status} value={props.values.status} onchange={(event) => { props.formOnChange(event.target.name, event.target.value) }} />
 

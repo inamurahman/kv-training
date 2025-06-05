@@ -27,6 +27,8 @@ export const LoginRightContainer = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  console.log('hi')
+
   const [login, {isLoading}] = useLoginMutation();
 
   const onLogin = async () => {
